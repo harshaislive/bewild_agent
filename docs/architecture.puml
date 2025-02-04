@@ -1,0 +1,83 @@
+@startuml Social Media Content Planner Architecture
+
+' Styling
+skinparam componentStyle rectangle
+skinparam backgroundColor white
+skinparam roundcorner 10
+skinparam component {
+  BackgroundColor #f8f9fa
+  BorderColor #dee2e6
+  ArrowColor #6c757d
+}
+
+' Components
+package "Frontend Components" {
+  [SocialMediaPlanForm] as form
+  [GeneratedPosts] as generated
+  [PostCard] as card
+  [PostConfigurationModal] as modal
+  [ApprovedPosts] as approved
+}
+
+package "Context & State Management" {
+  [FormContext] as context
+  note right of context
+    Manages:
+    - Form data
+    - Generated posts
+    - Selected posts
+    - Approved posts
+    - Loading states
+  end note
+}
+
+package "API Routes" {
+  [/api/generate] as genApi
+  [/api/posts] as postsApi
+}
+
+package "External Services" {
+  [MistralAI] as mistral
+  [Supabase] as supabase
+}
+
+package "Types" {
+  [PostIdea] as postType
+  [ApprovedPost] as approvedType
+  [SocialMediaPlanInput] as inputType
+}
+
+' Relationships
+form --> context : Uses
+generated --> context : Uses
+approved --> context : Uses
+card --> context : Uses
+modal --> context : Uses
+
+context --> genApi : Calls
+context --> postsApi : Calls
+
+genApi --> mistral : Generates content
+postsApi --> supabase : Stores/Retrieves
+
+postType --> form : Defines structure
+postType --> generated : Defines structure
+postType --> card : Defines structure
+approvedType --> approved : Defines structure
+inputType --> form : Defines input
+inputType --> genApi : Defines request
+
+' Flow
+note "User Flow" as N1
+form ..> N1
+N1 .. generated
+generated ..> modal
+modal ..> approved
+
+note "Data Flow" as N2
+context ..> N2
+N2 .. genApi
+genApi ..> mistral
+mistral ..> context
+
+@enduml
