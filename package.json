@@ -1,0 +1,47 @@
+{
+  "name": "mcp_agent",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepare": "husky install",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "npm run lint && npm run typecheck",
+    "postbuild": "next-sitemap --config next-sitemap.config.js"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "@mistralai/mistralai": "^0.0.7",
+    "@supabase/supabase-js": "^2.48.1",
+    "@types/lodash": "^4.17.15",
+    "@types/uuid": "^10.0.0",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.0.11",
+    "lodash": "^4.17.21",
+    "next": "15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.1.6",
+    "husky": "^9.1.7",
+    "next-sitemap": "^4.2.3",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
+  }
+}
